@@ -1,0 +1,85 @@
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy
+var User = require('../model/user')
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id)
+})
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user)
+  })
+})
+
+passport.use('register', new LocalStrategy( {
+  usernameField : 'email',
+  passwordField : 'password',
+  nicknameField : 'nickname',
+  passReqToCallback : true
+}, function(req, email, password, done) {
+  User.findOne({ 'email' : email }, function(err, user) {
+    if(err) return done(err)
+    if(user) {
+      return done(null, false)
+    } else {
+      var user = new User()
+      user.email = email
+      user.password = user.generateHash(password)
+      user.nickname = req.body.nickname
+      user.save(function(err) {
+        if(err) throw err
+        return done(null, user)
+      })
+    }
+  })
+}))
+
+passport.use('login', new LocalStrategy( {
+  usernameField : 'email',
+  passwordField : 'password',
+  passReqToCallback : true
+}, function(req, email, password, done) {
+  User.findOne({ 'email' : email }, function(err, user) {
+    if(err) return done(err)
+    if(!user) return done(null, false)
+    if(!user.validPassword(password)) return done(null, false)
+    else {
+      return done(null, user)
+    }
+  })
+}))
+
+// passport.use('modify', new LocalStrategy( {
+//   usernameField : 'email',
+//   passwordField : 'password',
+//   nicknameField : 'nickname',
+//   passReqToCallback : true
+// }, function(req, email, password, done) {
+//   if(req.user.id === req.params.id) {
+//     var user = new User()
+//     User.findByIdAndUpdate(id, {
+//       email : email,
+//       password : user.generateHash(password),
+//       nickname : req.body.nickname
+//     }, function(err, user) {
+//       if(err) return done(err)
+//       else return done(null, user)
+//     })
+//   }
+// }))
+
+// passport.use('modify', new LocalStrategy({
+//   usernameField : 'email',
+//   passwordField : 'password',
+//   userIdField : 'id',
+//   cafeIdField : 'cafeId',
+//   passReqToCallback : true
+// },function(req, email, password, done) {
+//   User.findByIdAndUpdate(req.params.id, function(err, user) {
+//     if(err) return done(err)
+//     else return done(null, user)
+//   })
+// }))
+
+module.exports = passport

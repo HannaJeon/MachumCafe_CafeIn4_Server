@@ -1,0 +1,21 @@
+{
+  "name": "macumcafe_server",
+  "version": "1.0.0",
+  "description": "macumcafe_server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "mongo-xlsx": "^1.0.12",
+    "mongoose": "^4.9.5",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  }
+}
