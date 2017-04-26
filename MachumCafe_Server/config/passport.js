@@ -50,36 +50,4 @@ passport.use('login', new LocalStrategy( {
   })
 }))
 
-// passport.use('modify', new LocalStrategy( {
-//   usernameField : 'email',
-//   passwordField : 'password',
-//   nicknameField : 'nickname',
-//   passReqToCallback : true
-// }, function(req, email, password, done) {
-//   if(req.user.id === req.params.id) {
-//     var user = new User()
-//     User.findByIdAndUpdate(id, {
-//       email : email,
-//       password : user.generateHash(password),
-//       nickname : req.body.nickname
-//     }, function(err, user) {
-//       if(err) return done(err)
-//       else return done(null, user)
-//     })
-//   }
-// }))
-
-// passport.use('modify', new LocalStrategy({
-//   usernameField : 'email',
-//   passwordField : 'password',
-//   userIdField : 'id',
-//   cafeIdField : 'cafeId',
-//   passReqToCallback : true
-// },function(req, email, password, done) {
-//   User.findByIdAndUpdate(req.params.id, function(err, user) {
-//     if(err) return done(err)
-//     else return done(null, user)
-//   })
-// }))
-
 module.exports = passport
