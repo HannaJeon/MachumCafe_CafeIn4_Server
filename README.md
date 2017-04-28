@@ -9,3 +9,6 @@
 |    POST     |api/v1/user/login   |로그인              |     O       |
 |    GET      |api/v1/bookmark/id  |즐겨찾기 목록 가져오기  |     O       |
 |    PUT      |api/v1/bookmark/id  |즐겨찾기 수정(삭제&추가)|     O       |
+|             |                    |카페 데이터 수정 제보   |             |
+|             |                    |카페 데이터 제보       |             |
+|             |                    |리뷰 등록            |             |
