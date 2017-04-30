@@ -7,8 +7,8 @@ var User = require('../../model/user')
 router.post('/register', function(req, res, next) {
   passport.authenticate('register', function(err, user, info) {
     if(err) return next(err)
-    if(user) return res.json({ message : 1 })
-    else return res.json({ message : 0 })
+    if(user) return res.json({ message : 1, description : '회원가입 성공!' })
+    else return res.json({ message : 0, description : '회원가입 실패!ㅠㅠ'})
   })(req, res, next)
 })
 
@@ -16,28 +16,29 @@ router.post('/register', function(req, res, next) {
 router.post('/login', function(req, res, next) {
  passport.authenticate('login', function(err, user, info) {
    if(err) res.json(err)
-   if(!user) return res.json({ message : 0 })
+   if(!user) return res.json({ message : 0, description : '로그인 실패!ㅠㅠ' })
 
    req.logIn(user, function(err) {
      if(err) return next(err)
-     return res.json({ message : 1, user : user })
+     return res.json({ message : 1, user : user, description : '로그인 성공!' })
    })
  })(req, res, next)
 })
 
+// api/v1/user
 // res 회원정보
-router.get('/:id', function(req, res) {
-  var id = req.params.id
+router.get('/login', function(req, res) {
+  // var id = req.params.id
   if(!req.user) {
-    res.json({ 'message' : 'no session' })
+    res.json({ message : 0, description : '세션정보 없음!' })
   } else {
-    if(req.user.id === id) {
-      User.findById(id, function(err, user) {
+    if(req.user) {
+      User.findById(req.user.id, function(err, user) {
         if(err) res.json(err)
-        res.json(user)
+        res.json({ message : 1, user : user, description : '유저정보 로드 성공!' })
       })
     } else {
-      res.json({ 'message' : 'user session not match' })
+      res.json({ description : '유저정보와 세션정보 불일치!' })
     }
   }
 })
