@@ -48,6 +48,7 @@ router.put('/:id', function(req, res) {
           user.bookmark.push(req.body.cafeId)
           user.save(function(err) {
             if(err) res.json(err)
+            res.json({ 'message' : '즐겨찾기 추가'})
           })
         } else {
           // cafeId가 북마크에 있을 경우 delete
@@ -55,9 +56,10 @@ router.put('/:id', function(req, res) {
           user.bookmark.splice(index, 1)
           user.save(function(err) {
             if(err) res.json(err)
+            res.json({ 'message' : '즐겨찾기 삭제'})
           })
         }
-        res.json({ 'bookmark' : user.bookmark })
+        // res.json({ 'bookmark' : user.bookmark })
       })
     } else {
       res.json({ 'message' : 'Fail' })
