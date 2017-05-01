@@ -25,7 +25,7 @@ router.post('/login', function(req, res, next) {
  })(req, res, next)
 })
 
-// api/v1/user
+// api/v1/user/login
 // res 회원정보
 router.get('/login', function(req, res) {
   // var id = req.params.id
