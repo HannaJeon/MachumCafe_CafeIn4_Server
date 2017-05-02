@@ -19,7 +19,31 @@ var cafeSchema = new Schema({
   wc : Boolean,
   terrace : Boolean,
   detailInfo : String,
-  category : Array
+  category : Array,
+  imagePath : Array
 })
+
+// var cafeSchema = new Schema({
+//   addr1: String,
+//   addr2: String,
+//   areacode: Number,
+//   cat1: String,
+//   cat2: String,
+//   cat3: String,
+//   contentid: Number,
+//   contenttypeid: Number,
+//   createdtime:  Number,
+//   firstimage: String,
+//   firstimage2: String,
+//   mapx: Number,
+//   mapy: Number,
+//   mlevel: Number,
+//   modifiedtime: Number,
+//   readcount: Number,
+//   sigungucode: Number,
+//   tel: String,
+//   title: String,
+//   zipcode: Number
+// })
 
 module.exports = mongoose.model('cafelist', cafeSchema)

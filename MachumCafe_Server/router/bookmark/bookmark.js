@@ -21,7 +21,7 @@ router.get('/:id', function(req, res) {
           return mongoose.Types.ObjectId(id)
         })
         Cafe.find({ '_id' : { $in : arr }}, function(err, cafe) {
-          res.json({ message : 1, cafe : cafe, description : '카페목록 불러오기 성공!' })
+          res.json({ message : 1, cafe : cafe, userBookmark : user.bookmark, description : '카페목록 불러오기 성공!' })
         })
       })
     } else {
@@ -59,7 +59,6 @@ router.put('/:id', function(req, res) {
             res.json({ message : 1, description : '즐겨찾기 삭제!' })
           })
         }
-        // res.json({ 'bookmark' : user.bookmark })
       })
     } else {
       res.json({ 'message' : 'Fail' })

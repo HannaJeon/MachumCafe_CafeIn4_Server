@@ -25,10 +25,8 @@ router.post('/login', function(req, res, next) {
  })(req, res, next)
 })
 
-// api/v1/user/login
 // res 회원정보
 router.get('/login', function(req, res) {
-  // var id = req.params.id
   if(!req.user) {
     res.json({ message : 0, description : '세션정보 없음!' })
   } else {
