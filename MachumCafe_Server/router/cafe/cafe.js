@@ -1,15 +1,16 @@
 var express = require('express')
 var router = express.Router()
+var path = require('path')
 var mongoose = require('mongoose')
 var mongoXlsx = require('mongo-xlsx')
 var Cafe = require('../../model/cafe')
-// var request = require('request')
 
-// var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=2oPiB3ZpKeJ%2BodYLYiVHNKr2I4xa7Gf2vIJMa3nhky%2BTA734NySEvUeMjP8GX3z2eMlu8%2FmZfdlkcM6OiHasJg%3D%3D&contentTypeId=39&areaCode=&sigunguCode=&cat1=A05&cat2=A0502&cat3=A05020900&listYN=Y&MobileOS=IOS&MobileApp=MachumCafe&arrange=A&numOfRows=2&pageNo=1&MobileOS=IOS&MobileApp=MachumCafe&_type=json'
 var db = mongoose.connection
 
 var model = null
 var xlsx = './model/initDB/cafeList.xlsx'
+
+router.use(express.static(path.join(__dirname, '../../images')))
 
 // 데이터 저장
 router.get('/initList', function(req, res) {
@@ -37,6 +38,7 @@ router.get('/initList', function(req, res) {
       if(obj.terrace) {
         obj.category.push('테라스')
       }
+      obj.imagesName = ['profile.jpeg', 'cafeImage.jpg']
       // db insert
       var cafe = new Cafe(obj)
       cafe.save(function(err, result) {
@@ -54,6 +56,9 @@ router.get('/', function(req, res) {
     res.json(cafe)
   })
 })
+
+// var request = require('request')
+// var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=2oPiB3ZpKeJ%2BodYLYiVHNKr2I4xa7Gf2vIJMa3nhky%2BTA734NySEvUeMjP8GX3z2eMlu8%2FmZfdlkcM6OiHasJg%3D%3D&contentTypeId=39&areaCode=&sigunguCode=&cat1=A05&cat2=A0502&cat3=A05020900&listYN=Y&MobileOS=IOS&MobileApp=MachumCafe&arrange=A&numOfRows=2&pageNo=1&MobileOS=IOS&MobileApp=MachumCafe&_type=json'
 
 // router.get('/temp', function(req, res) {
 //   var temp = []

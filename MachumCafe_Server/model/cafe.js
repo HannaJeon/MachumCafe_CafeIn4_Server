@@ -20,7 +20,7 @@ var cafeSchema = new Schema({
   terrace : Boolean,
   detailInfo : String,
   category : Array,
-  imagePath : Array
+  imagesName : Array
 })
 
 // var cafeSchema = new Schema({
