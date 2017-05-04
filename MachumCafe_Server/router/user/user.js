@@ -37,4 +37,10 @@ router.get('/login', function(req, res) {
   }
 })
 
+router.get('/logout', function(req, res) {
+  req.session.destroy()
+  res.clearCookie('keyboard cat')
+  res.json({ message : 1, description: '세션 정보 삭제!' })
+})
+
 module.exports = router
