@@ -27,17 +27,13 @@ router.post('/login', function(req, res, next) {
 
 // res 회원정보
 router.get('/login', function(req, res) {
-  if(!req.user) {
-    res.json({ message : 0, description : '세션정보 없음!' })
+  if(req.user) {
+    User.findById(req.user.id, function(err, user) {
+      if(err) res.json(err)
+      res.json({ message : 1, user : user, description : '유저정보 로드 성공!' })
+    })
   } else {
-    if(req.user) {
-      User.findById(req.user.id, function(err, user) {
-        if(err) res.json(err)
-        res.json({ message : 1, user : user, description : '유저정보 로드 성공!' })
-      })
-    } else {
-      res.json({ description : '유저정보와 세션정보 불일치!' })
-    }
+    res.json({ message : 0, description : '세션정보 없음!' })
   }
 })
 
