@@ -11,15 +11,15 @@ var googleMapsClient = require('@google/maps').createClient({
 // 크롤링 강남구 카페 DB
 router.get('/cafe', function(req, res) {
   var gangNamGu = ["역삼동+카페", "논현동+카페", "신사동+카페", "압구정동+카페", "청담동+카페", "삼성동+카페", "대치동+카페", "도곡동+카페", "개포동+카페", "대치동+카페", "세곡동+카페", "자곡동+카페"]
-  gangNamGu.forEach(function(val) {
+  // gangNamGu.forEach(function(val) {
     for(var i = 0; i <= 10; i++) {
-      var url = "http://www.diningcode.com/list.php?page="+i+"&chunk=10&query=" + encodeURIComponent(val)
+      var url = "http://www.diningcode.com/list.php?page="+i+"&chunk=10&query=" + encodeURIComponent("역삼동+카페")
       request(url, function(err, res, body) {
         if(err) throw err
         var $ = cheerio.load(body)
 
-        $("div#search_list").each(function() {
-          var cafe = $(this).find("div.dc-restaurant-name")
+        // $("div#search_list").each(function() {
+          var cafe = $("div.dc-restaurant-name")
           // 카페 하나씩
           cafe.each(function() {
             var cafeUrl = "http://www.diningcode.com/" + $(this).find("a").attr("href")
@@ -32,12 +32,30 @@ router.get('/cafe', function(req, res) {
               })
               var length = $("div.item-information-text").length-1
               var address = $("div:nth-child("+ length +") > div.item-information-text").text()
-              var tel = $("div#item-tel > div.item-information-text").text()
-              var hours = $("div.rest-time._flex_1 > div.rest-info-contents").text()
-              var menu = $("div.rest-menu._flex_1 > div.rest-info-contents").text()
+              var tel
+              if($("div#item-tel > div.item-information-text").text().length > 1) {
+                tel = $("div#item-tel > div.item-information-text").text()
+              }
+              if($("div.rest-time-block").length !== 0) {
+                var hours = ""
+                $("div.rest-time-block").each(function() {
+                  hours += $(this).find("div.rest-time-left").text()
+                  hours += " : " + $(this).find("div.rest-time-right > div.time").text() + "\n"
+                })
+              }
+              var menu
+              if($("div.rest-menu-block").length !== 0) {
+                var menu = ""
+                $("div.rest-menu-block").each(function() {
+                  menu += $(this).find("div.rest-menu-left").text()
+                  menu += " : " + $(this).find("div.rest-menu-right > div.time").text() + "\n"
+                })
+              }
               var imagesURL = []
+              // console.log($("td#photo_empty_cell1").find("img").length)
+              // if($("td#photo_empty_cell1"))
               $("td#photo_empty_cell1").find("img").each(function() {
-                imagesURL.push($(this).attr("src"))
+                if($(this).attr("b_id") !== "instagram" && $(this).attr("id").substring(1) <= 5) imagesURL.push($(this).attr("src"))
               })
               var latitude
               var longitude
@@ -197,10 +215,10 @@ router.get('/cafe', function(req, res) {
               })
             })
           })
-        })
+        // })
       })
     } // for
-  }) // forEach
+  // }) // forEach
   res.json("강남구 완료")
 })
 
