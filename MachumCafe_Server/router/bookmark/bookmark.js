@@ -4,8 +4,6 @@ var mongoose = require('mongoose')
 var Cafe = require('../../model/cafe')
 var User = require('../../model/user')
 
-var db = mongoose.connection
-
 // get bookmark cafe
 router.get('/:id', function(req, res) {
   var id = req.params.id

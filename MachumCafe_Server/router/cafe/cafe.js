@@ -5,8 +5,6 @@ var mongoose = require('mongoose')
 var mongoXlsx = require('mongo-xlsx')
 var Cafe = require('../../model/cafe')
 
-var db = mongoose.connection
-
 var model = null
 var xlsx = './model/initDB/cafeList.xlsx'
 
@@ -56,50 +54,5 @@ router.get('/', function(req, res) {
     res.json(cafe)
   })
 })
-
-// var request = require('request')
-// var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=2oPiB3ZpKeJ%2BodYLYiVHNKr2I4xa7Gf2vIJMa3nhky%2BTA734NySEvUeMjP8GX3z2eMlu8%2FmZfdlkcM6OiHasJg%3D%3D&contentTypeId=39&areaCode=&sigunguCode=&cat1=A05&cat2=A0502&cat3=A05020900&listYN=Y&MobileOS=IOS&MobileApp=MachumCafe&arrange=A&numOfRows=2&pageNo=1&MobileOS=IOS&MobileApp=MachumCafe&_type=json'
-
-// router.get('/temp', function(req, res) {
-//   var temp = []
-//   request({
-//     url: url, method: 'GET'
-//   }, function(err, res, items) {
-//     // console.log('Status', res.statusCode)
-//     // console.log('Headers', JSON.stringify(res.headers))
-//     // console.log('Response received', body)
-//     // console.log(items)
-//     var jsonItems = JSON.parse(items)
-//     console.log(jsonItems.response.body.items.item)
-//     jsonItems.response.body.items.item.forEach(function(obj) {
-//       var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=2oPiB3ZpKeJ%2BodYLYiVHNKr2I4xa7Gf2vIJMa3nhky%2BTA734NySEvUeMjP8GX3z2eMlu8%2FmZfdlkcM6OiHasJg%3D%3D&contentTypeId=39&contentId='
-//       url += obj.contentid.toString() + '&MobileOS=IOS&MobileApp=MachumCafe&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json'
-//       request({
-//         url: url, method: 'GET'
-//       }, function(err, res, items) {
-//         var json = JSON.parse(items)
-//         // console.log(json.response.body.items.item)
-//       })
-//       var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey=2oPiB3ZpKeJ%2BodYLYiVHNKr2I4xa7Gf2vIJMa3nhky%2BTA734NySEvUeMjP8GX3z2eMlu8%2FmZfdlkcM6OiHasJg%3D%3D&contentTypeId=39&contentId='
-//       url += obj.contentid.toString() + '&MobileOS=IOS&MobileApp=MachumCafe&introYN=Y&_type=json'
-//       request({
-//         url: url, method: 'GET'
-//       }, function(err, res, items) {
-//         var json = JSON.parse(items)
-//         // console.log(json.response.body.items.item)
-//       })
-//       var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=2oPiB3ZpKeJ%2BodYLYiVHNKr2I4xa7Gf2vIJMa3nhky%2BTA734NySEvUeMjP8GX3z2eMlu8%2FmZfdlkcM6OiHasJg%3D%3D&contentTypeId=39&contentId='
-//       url += obj.contentid.toString() + '&MobileOS=IOS&MobileApp=MachumCafe&listYN=Y&_type=json'
-//       request({
-//         url: url, method: 'GET'
-//       }, function(err, res, items) {
-//         var json = JSON.parse(items)
-//         // console.log(json.response.body.items.item)
-//       })
-//     })
-//
-//   })
-//   res.json(temp)
-// })
 
 module.exports = router
