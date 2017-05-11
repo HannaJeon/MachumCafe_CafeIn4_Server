@@ -15,13 +15,13 @@ app.listen(3000, function() {
 })
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended : true}))
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(session({
-  secret : 'keyboard cat',
-  resave : false,
-  saveUninitialized : true,
-  cookie : { maxAge : 1000 * 60 * 60 * 24 * 30 }
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 30 }
 }))
 app.use(passport.initialize())
 app.use(passport.session())

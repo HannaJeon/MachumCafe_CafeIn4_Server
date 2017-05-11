@@ -13,12 +13,12 @@ passport.deserializeUser(function(id, done) {
 })
 
 passport.use('register', new LocalStrategy( {
-  usernameField : 'email',
-  passwordField : 'password',
-  nicknameField : 'nickname',
-  passReqToCallback : true
+  usernameField: 'email',
+  passwordField: 'password',
+  nicknameField: 'nickname',
+  passReqToCallback: true
 }, function(req, email, password, done) {
-  User.findOne({ 'email' : email }, function(err, user) {
+  User.findOne({ 'email': email }, function(err, user) {
     if(err) return done(err)
     if(user) {
       return done(null, false)
@@ -36,11 +36,11 @@ passport.use('register', new LocalStrategy( {
 }))
 
 passport.use('login', new LocalStrategy( {
-  usernameField : 'email',
-  passwordField : 'password',
-  passReqToCallback : true
+  usernameField: 'email',
+  passwordField: 'password',
+  passReqToCallback: true
 }, function(req, email, password, done) {
-  User.findOne({ 'email' : email }, function(err, user) {
+  User.findOne({ 'email': email }, function(err, user) {
     if(err) return done(err)
     if(!user) return done(null, false)
     if(!user.validPassword(password)) return done(null, false)

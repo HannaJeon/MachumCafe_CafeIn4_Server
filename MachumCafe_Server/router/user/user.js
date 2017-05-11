@@ -7,8 +7,8 @@ var User = require('../../model/user')
 router.post('/register', function(req, res, next) {
   passport.authenticate('register', function(err, user, info) {
     if(err) return next(err)
-    if(user) return res.json({ message : 1, description : '회원가입 성공!' })
-    else return res.json({ message : 0, description : '회원가입 실패!ㅠㅠ'})
+    if(user) return res.json({ message: 1, description: '회원가입 성공!' })
+    else return res.json({ message: 0, description: '회원가입 실패!ㅠㅠ'})
   })(req, res, next)
 })
 
@@ -16,11 +16,11 @@ router.post('/register', function(req, res, next) {
 router.post('/login', function(req, res, next) {
  passport.authenticate('login', function(err, user, info) {
    if(err) res.json(err)
-   if(!user) return res.json({ message : 0, description : '로그인 실패!ㅠㅠ' })
+   if(!user) return res.json({ message: 0, description: '로그인 실패!ㅠㅠ' })
 
    req.logIn(user, function(err) {
      if(err) return next(err)
-     return res.json({ message : 1, user : user, description : '로그인 성공!' })
+     return res.json({ message: 1, user: user, description: '로그인 성공!' })
    })
  })(req, res, next)
 })
@@ -30,17 +30,17 @@ router.get('/login', function(req, res) {
   if(req.user) {
     User.findById(req.user.id, function(err, user) {
       if(err) res.json(err)
-      res.json({ message : 1, user : user, description : '유저정보 로드 성공!' })
+      res.json({ message: 1, user: user, description: '유저정보 로드 성공!' })
     })
   } else {
-    res.json({ message : 0, description : '세션정보 없음!' })
+    res.json({ message: 0, description: '세션정보 없음!' })
   }
 })
 
 router.get('/logout', function(req, res) {
   req.session.destroy()
   res.clearCookie('keyboard cat')
-  res.json({ message : 1, description: '세션 정보 삭제!' })
+  res.json({ message: 1, description: '세션 정보 삭제!' })
 })
 
 module.exports = router
