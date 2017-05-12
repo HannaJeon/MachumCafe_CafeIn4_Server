@@ -3,6 +3,7 @@ var router = express.Router()
 var mongoose = require('mongoose')
 var multer = require('multer')
 var path = require('path')
+var uuid = require('uuid')
 var SuggestionNewCafe = require('../../../model/suggestionNewCafe')
 
 var storage = multer.diskStorage({
@@ -10,19 +11,18 @@ var storage = multer.diskStorage({
     callback(null, __dirname + '/images')
   },
   filename: function(req, file, callback) {
-    callback(null, Date.now() + path.extname(file.originalname))
+    callback(null, uuid.v4() + path.extname(file.originalname))
   }
 })
 var upload = multer({ storage: storage })
 
 // 이미지 업로드
-router.post('/uploads', upload.single('image'), function(req, res) {
-  if(req.file) {
-    console.log(req.file)
-    res.json({ message: 1, filename: req.file.filename })
-  } else {
-    res.json({ message: 0 })
-  }
+router.post('/uploads', upload.array('image'), function(req, res, next) {
+  var filenames = []
+  req.files.forEach(function(file) {
+    filenames.push(file.filename)
+  })
+  res.json(filenames)
 })
 
 // 새로운 카페 제보

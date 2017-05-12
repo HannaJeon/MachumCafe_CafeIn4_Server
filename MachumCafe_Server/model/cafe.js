@@ -6,7 +6,7 @@ var cafeSchema = new Schema({
   name: String,
   address: String,
   tel: String,
-  keyword: Array,
+  keywords: Array,
   hours: String,
   menu: String,
   latitude: Number,

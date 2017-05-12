@@ -28,9 +28,12 @@ router.get('/cafe', function(req, res) {
           request(cafeUrl, function(err, res, body) {
             var $ = cheerio.load(body)
             var name = $("div#item-rn > span.item-rn-title").text()
-            var keyword = []
+            var keywords = []
+            var category = []
             $("a.urlkeyword").each(function() {
-              keyword.push($(this).text())
+              var keyword = $(this).text()
+              categoryFunc(keyword, category)
+              keywords.push(keyword)
             })
             var length = $("div.item-information-text").length-1
             var address = $("div:nth-child("+ length +") > div.item-information-text").text()
@@ -66,11 +69,6 @@ router.get('/cafe', function(req, res) {
               var latitude = res.json.results[0].geometry.location.lat
               var longitude = res.json.results[0].geometry.location.lng
 
-              var category = []
-              keyword.forEach(function(val) {
-                categoryFunc(val, category)
-              })
-
               Cafe.findOne({ "address": address }, function(err, cafe) {
                 if(err) throw err
                 if(!cafe) {
@@ -79,7 +77,7 @@ router.get('/cafe', function(req, res) {
                   cafe.address = address
                   cafe.tel = tel
                   cafe.hours = hours
-                  cafe.keyword = keyword
+                  cafe.keywords = keywords
                   cafe.menu = menu
                   cafe.imagesURL = imagesURL
                   cafe.latitude = latitude
@@ -101,7 +99,7 @@ router.get('/cafe', function(req, res) {
 })
 
 // 카테고리화
-function categoryFunc(val, category) {
+function categoryFunc(keyword, category) {
   var obj = {
     "주차": ["전용주차장", "주차가능", "무료주차", "발렛"],
     "테라스": ["테라스", "정원", "야외"],
@@ -130,7 +128,7 @@ function categoryFunc(val, category) {
   }
   for(key in obj) {
     obj[key].forEach(function(str) {
-      if(val.indexOf(str) !== -1) {
+      if(keyword.indexOf(str) !== -1) {
         var cat = category.filter(function(cat) { return key === cat })
         if(cat.length === 0) category.push(key)
       }
