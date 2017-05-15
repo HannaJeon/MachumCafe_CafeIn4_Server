@@ -6,7 +6,6 @@ var suggestionCafeSchema = new Schema({
   address: String,
   tel: String,
   hours: String,
-  rate: String,
   category: Array,
   imagesURL: Array,
   location: {

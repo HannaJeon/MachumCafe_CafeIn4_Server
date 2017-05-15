@@ -19,7 +19,7 @@ router.get('/:id', function(req, res) {
           return mongoose.Types.ObjectId(id)
         })
         Cafe.find({ '_id': { $in: arr }}, function(err, cafe) {
-          res.json({ message: 1, cafe: cafe, userBookmark: user.bookmark, description: '카페목록 불러오기 성공!' })
+          res.json({ message: 1, cafe: cafe, description: '카페목록 불러오기 성공!' })
         })
       })
     } else {
@@ -46,7 +46,7 @@ router.put('/:id', function(req, res) {
           user.bookmark.push(req.body.cafeId)
           user.save(function(err) {
             if(err) res.json(err)
-            res.json({ message: 1, description: '즐겨찾기 추가!' })
+            res.json({ message: 1, description: '즐겨찾기 추가!', userBookmark: user.bookmark })
           })
         } else {
           // cafeId가 북마크에 있을 경우 delete
@@ -54,7 +54,7 @@ router.put('/:id', function(req, res) {
           user.bookmark.splice(index, 1)
           user.save(function(err) {
             if(err) res.json(err)
-            res.json({ message: 1, description: '즐겨찾기 삭제!' })
+            res.json({ message: 1, description: '즐겨찾기 삭제!', userBookmark: user.bookmark })
           })
         }
       })

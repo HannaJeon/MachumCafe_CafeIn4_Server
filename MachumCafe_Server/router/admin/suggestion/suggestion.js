@@ -26,16 +26,16 @@ router.post('/uploads', upload.array('image'), function(req, res, next) {
 })
 
 // 새로운 카페 제보
-router.post('/newCafe', function(req, res) {
+router.post('/newcafe', function(req, res) {
   var cafe = new SuggestionNewCafe()
   cafe.name = req.body.name
   cafe.address = req.body.address
   cafe.tel = req.body.tel
   cafe.hours = req.body.hours
-  cafe.rate = req.body.rate
   cafe.category = req.body.category
   cafe.imagesURL = req.body.imagesURL
-  cafe.location = [req.body.longitude, req.body.latitude]
+  // 클라이언트 구현 되면 활성화
+  // cafe.location = [req.body.longitude, req.body.latitude]
   cafe.save(function(err) {
     if(err) throw err
     else res.json({ message: 1 })
