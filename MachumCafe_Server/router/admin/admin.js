@@ -4,9 +4,12 @@ var mongoose = require('mongoose')
 var request = require('request')
 var cheerio = require('cheerio')
 var Cafe = require('../../model/cafe')
+var suggestion = require('./suggestion/suggestion')
 var googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyBNTjHJ-wYRN_p9x7HMJu-_sI2LG-kzVj4'
 })
+
+router.use('/suggestion', suggestion)
 
 // 크롤링 강남구 카페 DB
 router.get('/cafe', function(req, res) {
