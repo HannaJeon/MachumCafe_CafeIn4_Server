@@ -35,6 +35,7 @@ router.post('/newCafe', function(req, res) {
   cafe.rate = req.body.rate
   cafe.category = req.body.category
   cafe.imagesURL = req.body.imagesURL
+  cafe.location = [req.body.longitude, req.body.latitude]
   cafe.save(function(err) {
     if(err) throw err
     else res.json({ message: 1 })

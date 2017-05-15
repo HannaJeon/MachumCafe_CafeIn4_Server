@@ -8,7 +8,11 @@ var suggestionCafeSchema = new Schema({
   hours: String,
   rate: String,
   category: Array,
-  imagesURL: Array
+  imagesURL: Array,
+  location: {
+    index: '2dsphere',
+    type: [Number]
+  }
 })
 
 module.exports = mongoose.model('suggestion_newCafelist', suggestionCafeSchema)
