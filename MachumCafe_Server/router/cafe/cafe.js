@@ -3,7 +3,7 @@ var router = express.Router()
 var mongoose = require('mongoose')
 var Cafe = require('../../model/cafe')
 
-// 현위치 1km 내 카페목록
+// 현위치 1km 내 카페 전체목록
 router.post('/', function(req, res) {
   Cafe.find({
     location: {
@@ -21,6 +21,15 @@ router.post('/', function(req, res) {
     }
   }).exec(function(err, cafe) {
     console.log(cafe.length)
+    res.json(cafe)
+  })
+})
+
+// 특정 카페 정보 불러오기
+router.get('/:id', function(req, res) {
+  var id = req.params.id
+
+  Cafe.findById(id, function(err, cafe) {
     res.json(cafe)
   })
 })
