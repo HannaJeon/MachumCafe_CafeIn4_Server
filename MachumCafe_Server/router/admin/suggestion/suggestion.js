@@ -34,8 +34,7 @@ router.post('/newcafe', function(req, res) {
   cafe.hours = req.body.hours
   cafe.category = req.body.category
   cafe.imagesURL = req.body.imagesURL
-  // 클라이언트 구현 되면 활성화
-  // cafe.location = [req.body.longitude, req.body.latitude]
+  cafe.location = [req.body.longitude, req.body.latitude]
   cafe.save(function(err) {
     if(err) throw err
     else res.json({ result: 1 })
