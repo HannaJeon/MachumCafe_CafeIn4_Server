@@ -27,3 +27,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/api/v1', router)
+
+
+//localhost:3000/api/v1/cafe/:id/review
+//localhost:3000/api/v1/user/:id/bookmark

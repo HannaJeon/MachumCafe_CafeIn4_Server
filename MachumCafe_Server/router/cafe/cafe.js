@@ -32,17 +32,4 @@ router.post('/', function(req, res) {
   })
 })
 
-router.get('/test', function(req, res) {
-  Cafe.find({}, function(err, cafes) {
-    cafes.forEach(function(cafe) {
-      cafe.mainImage = cafe.imagesURL[0]
-      cafe.save(function(err) {
-        if(err) throw err
-      })
-    })
-    console.log("cafe", cafes.length)
-  })
-  res.json(1)
-})
-
 module.exports = router

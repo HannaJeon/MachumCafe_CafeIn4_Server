@@ -38,7 +38,7 @@ router.post('/newcafe', function(req, res) {
   // cafe.location = [req.body.longitude, req.body.latitude]
   cafe.save(function(err) {
     if(err) throw err
-    else res.json({ message: 1 })
+    else res.json({ result: 1 })
   })
 })
 
