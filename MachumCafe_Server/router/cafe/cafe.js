@@ -41,6 +41,7 @@ router.put('/:id/review', function(req, res) {
     res.json({ result: 0, description: '세션정보 없음!' })
   } else {
     Cafe.findById(id, function(err, cafe) {
+      req.body.review.date = new Date().toISOString().slice(0,10)
       cafe.review.push(req.body.review)
       cafe.save(function(err) {
         if(err) res.json(err)
