@@ -45,4 +45,26 @@ router.get('/test', function(req, res) {
   res.json(1)
 })
 
+router.put('/:id/review', function(req, res) {
+  var id = req.params.id
+  if(!req.user) {
+    res.json({ message: 0, description: '세션정보 없음!' })
+  } else {
+    Cafe.findById(id, function(err, cafe) {
+      cafe.review.push(req.body.review)
+      cafe.save(function(err) {
+        if(err) res.json(err)
+        res.json({ message: 1, description: '리뷰 등록!', reviews: cafe.review })
+      })
+    })
+  }
+})
+
+router.get('/:id/review', function(req, res) {
+  var id = req.params.id
+  Cafe.findById(id, function(err, cafe) {
+    res.json({ message: 1, description: '성공!', reviews: cafe.review })
+  })
+})
+
 module.exports = router
