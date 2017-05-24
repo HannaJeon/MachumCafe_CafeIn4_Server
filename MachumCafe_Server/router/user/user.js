@@ -27,6 +27,30 @@ router.post('/login', function(req, res, next) {
  })(req, res, next)
 })
 
+router.post('/login/kakao', function(req, res) {
+  User.findOne({ email: req.body.email }, function(err, user) {
+    if(err) throw err
+    if(user) {
+      user.email = req.body.email
+      user.nickname = req.body.nickname
+      user.imageURL = req.body.imageURL
+      user.save(function(err) {
+        if(err) throw err
+      })
+      res.json({ result: 1, user: user })
+    } else {
+      var user = new User()
+      user.email = req.body.email
+      user.nickname = req.body.nickname
+      user.imageURL = req.body.imageURL
+      user.save(function(err) {
+        if(err) throw err
+        res.json({ result: 1, user: user, description: '카카오톡 유저 저장 성공!' })
+      })
+    }
+  })
+})
+
 // res 회원정보
 router.get('/login', function(req, res) {
   if(req.user) {

@@ -6,7 +6,8 @@ var userSchema = new Schema({
   email: String,
   password: String,
   nickname: String,
-  bookmark: Array
+  bookmark: Array,
+  imageURL: String
 })
 
 userSchema.methods.generateHash = function(password) {
