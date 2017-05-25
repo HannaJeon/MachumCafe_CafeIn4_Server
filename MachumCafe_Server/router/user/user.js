@@ -27,13 +27,28 @@ router.post('/login', function(req, res, next) {
  })(req, res, next)
 })
 
+// res 회원정보
+router.get('/login', function(req, res) {
+  if(req.user) {
+    User.findById(req.user.id, function(err, user) {
+      if(err) res.json(err)
+      res.json({ result: 1, user: user, description: '유저정보 로드 성공!' })
+    })
+  } else {
+    res.json({ result: 0, description: '세션정보 없음!' })
+  }
+})
+
+// kakao 로그인 시 유저 정보 저장
 router.post('/login/kakao', function(req, res) {
   User.findOne({ email: req.body.email }, function(err, user) {
     if(err) throw err
     if(user) {
-      user.email = req.body.email
-      user.nickname = req.body.nickname
-      user.imageURL = req.body.imageURL
+      if(user.nickname !== req.body.nickname) {
+        user.nickname = req.body.nickname
+      } else if(user.imageURL !== req.body.imageURL) {
+        user.imageURL = req.body.imageURL
+      }
       user.save(function(err) {
         if(err) throw err
       })
@@ -51,18 +66,6 @@ router.post('/login/kakao', function(req, res) {
   })
 })
 
-// res 회원정보
-router.get('/login', function(req, res) {
-  if(req.user) {
-    User.findById(req.user.id, function(err, user) {
-      if(err) res.json(err)
-      res.json({ result: 1, user: user, description: '유저정보 로드 성공!' })
-    })
-  } else {
-    res.json({ result: 0, description: '세션정보 없음!' })
-  }
-})
-
 // logout
 router.get('/logout', function(req, res) {
   req.session.destroy()
@@ -74,10 +77,10 @@ router.get('/logout', function(req, res) {
 router.get('/:id/bookmark', function(req, res) {
   var id = req.params.id
 
-  if(!req.user) {
-    res.json({ result: 0, description: '세션정보 없음!' })
-  } else {
-    if(req.user.id === id) {
+  // if(!req.user) {
+  //   res.json({ result: 0, description: '세션정보 없음!' })
+  // } else {
+    // if(req.user.id === id) {
       User.findById(id, function(err, user) {
         if(err) res.json(err)
 
@@ -88,19 +91,19 @@ router.get('/:id/bookmark', function(req, res) {
           res.json({ result: 1, cafe: cafe, description: '카페목록 불러오기 성공!' })
         })
       })
-    } else {
-      res.json({ result: 'Fail'})
-    }
-  }
+    // } else {
+    //   res.json({ result: 'Fail'})
+  //   }
+  // }
 })
 
 // add or delete My bookmark
 router.put('/:id/bookmark', function(req, res) {
   var id = req.params.id
-  if(!req.user) {
-    res.json({ result: 0, description: '세션정보 없음!' })
-  } else {
-    if(req.user.id === id) {
+  // if(!req.user) {
+  //   res.json({ result: 0, description: '세션정보 없음!' })
+  // } else {
+    // if(req.user.id === id) {
       User.findById(id, function(err, user) {
         if(err) res.json(err)
 
@@ -124,10 +127,10 @@ router.put('/:id/bookmark', function(req, res) {
           })
         }
       })
-    } else {
-      res.json({ result: 'Fail' })
-    }
-  }
+    // } else {
+    //   res.json({ result: 'Fail' })
+    // }
+  // }
 })
 
 module.exports = router

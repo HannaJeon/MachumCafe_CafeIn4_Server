@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt-nodejs')
 var Schema = mongoose.Schema
 
 var userSchema = new Schema({
+  // kakaoID: Number,
   email: String,
   password: String,
   nickname: String,
@@ -15,7 +16,9 @@ userSchema.methods.generateHash = function(password) {
 }
 
 userSchema.methods.validPassword = function(password) {
-  return bcrypt.compareSync(password, this.password)
+  if(this.password !== undefined) {
+    return bcrypt.compareSync(password, this.password)
+  }
 }
 
 module.exports = mongoose.model('user', userSchema)
