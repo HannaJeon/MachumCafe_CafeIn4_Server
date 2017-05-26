@@ -3,7 +3,6 @@ var bcrypt = require('bcrypt-nodejs')
 var Schema = mongoose.Schema
 
 var userSchema = new Schema({
-  // kakaoID: Number,
   email: String,
   password: String,
   nickname: String,

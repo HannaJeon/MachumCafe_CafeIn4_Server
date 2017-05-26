@@ -3,7 +3,7 @@ var review = require('./review').schema
 var Schema = mongoose.Schema
 
 // 다이닝코드 크롤링 Schema
-var cafeSchema = new Schema({
+var suggestionEditCafeSchema = new Schema({
   name: String,
   address: String,
   tel: String,
@@ -19,4 +19,4 @@ var cafeSchema = new Schema({
   review: [review]
 })
 
-module.exports = mongoose.model('cafelist', cafeSchema)
+module.exports = mongoose.model('suggestion_editCafelist', suggestionEditCafeSchema)

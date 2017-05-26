@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
-var suggestionCafeSchema = new Schema({
+var suggestionNewCafeSchema = new Schema({
   name: String,
   address: String,
   tel: String,
@@ -14,4 +14,4 @@ var suggestionCafeSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('suggestion_newCafelist', suggestionCafeSchema)
+module.exports = mongoose.model('suggestion_newCafelist', suggestionNewCafeSchema)

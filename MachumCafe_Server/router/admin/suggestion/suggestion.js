@@ -5,6 +5,7 @@ var multer = require('multer')
 var path = require('path')
 var uuid = require('uuid')
 var SuggestionNewCafe = require('../../../model/suggestionNewCafe')
+var SuggestionEditCafe = require('../../../model/suggestionEditCafe')
 
 var storage = multer.diskStorage({
   destination: function(req, file, callback) {
@@ -41,8 +42,12 @@ router.post('/newcafe', function(req, res) {
   })
 })
 
-router.post('/editCafe', function(req, res) {
-  var suggestionCafe = new SuggestionNewCafe()
+router.post('/editcafe', function(req, res) {
+  var cafe = new SuggestionEditCafe(req.body)
+  cafe.save(function(err) {
+    if(err) throw err
+    res.json({ result: 1 })
+  })
 })
 
 module.exports = router

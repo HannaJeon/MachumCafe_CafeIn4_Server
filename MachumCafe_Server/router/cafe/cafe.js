@@ -37,9 +37,9 @@ router.get('/:id', function(req, res) {
 // 카페 리뷰 등록
 router.put('/:id/review', function(req, res) {
   var id = req.params.id
-  if(!req.user) {
-    res.json({ result: 0, description: '세션정보 없음!' })
-  } else {
+  // if(!req.user) {
+  //   res.json({ result: 0, description: '세션정보 없음!' })
+  // } else {
     Cafe.findById(id, function(err, cafe) {
       req.body.review.date = new Date().toISOString().slice(0,10)
       cafe.review.push(req.body.review)
@@ -48,7 +48,7 @@ router.put('/:id/review', function(req, res) {
         res.json({ result: 1, description: '리뷰 등록!', reviews: cafe.review })
       })
     })
-  }
+  // }
 })
 
 // 카페 리뷰 목록 불러오기
