@@ -6,10 +6,11 @@
 |    GET      |api/v1/admin/cafe                  |카페 목록 크롤링 DB저장          |     O       |서울,경기 완료|
 |    POST     |api/v1/admin/suggestion/uploads    |새로운 카페 제보(이미지업로드)     |     O       |           |
 |    POST     |api/v1/admin/suggestion/newcafe    |새로운 카페 제보                |     O       |           |
-|    POST     |api/v1/cafe                        |현위치 반경 1km 내 카페 목록     |     O      |            |
-|    GET      |api/v1/cafe/id                     |특정카페 불러오기               |     O      |            |
-|    POST     |api/v1/user/register               |회원가입                      |     O      |            |
-|    POST     |api/v1/user/login                  |로그인                        |     O       |            |
+|    POST     |api/v1/admin/suggestion/editcafe   |기존 카페 수정 제보             |     O       |           |
+|    POST     |api/v1/cafe                        |현위치 반경 1km 내 카페 목록     |     O       |            |
+|    GET      |api/v1/cafe/id                     |특정카페 불러오기               |     O       |            |
+|    POST     |api/v1/user/register               |회원가입                      |     O       |            |
+|    POST     |api/v1/user/login                  |로그인                        |     O      |            |
 |    GET      |api/v1/user/logout                 |로그아웃                      |     O       |            |
 |    POST     |api/v1/user/login/kakao            |카카오로 로그인 시 기본 유저정보 저장|     O       |            |
 |    GET      |api/v1/user/id/bookmark            |즐겨찾기 목록 가져오기           |     O       |            |
