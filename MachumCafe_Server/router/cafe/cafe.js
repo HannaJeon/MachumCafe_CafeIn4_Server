@@ -41,6 +41,8 @@ router.put('/:id/review', function(req, res) {
   //   res.json({ result: 0, description: '세션정보 없음!' })
   // } else {
     Cafe.findById(id, function(err, cafe) {
+      cafe.totalRating += req.body.review.rating
+      cafe.rating = cafe.totalRating / (cafe.review.length+1)
       req.body.review.date = new Date().toISOString().slice(0,10)
       cafe.review.push(req.body.review)
       cafe.save(function(err) {

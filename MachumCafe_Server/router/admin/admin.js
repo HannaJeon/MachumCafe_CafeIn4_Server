@@ -160,4 +160,16 @@ router.get('/test', function(req, res) {
   res.json("중복검사")
 })
 
+router.get('/test1', function(req, res) {
+  Cafe.find(function(err, cafes) {
+    cafes.forEach(function(cafe) {
+      cafe.rating = 0.0
+      cafe.save(function(err) {
+        if(err) throw err
+      })
+    })
+  })
+  res.json("완료")
+})
+
 module.exports = router

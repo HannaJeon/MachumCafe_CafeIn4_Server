@@ -16,6 +16,8 @@ var cafeSchema = new Schema({
     index: '2dsphere',
     type: [Number]
   },
+  totalRating: { type: Number, default: 0 },
+  rating: Number,
   review: [review]
 })
 
