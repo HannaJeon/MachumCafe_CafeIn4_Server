@@ -3,10 +3,11 @@ var router = express.Router()
 var mongoose = require('mongoose')
 var multer = require('multer')
 var path = require('path')
-var uuid = require('uuid')
 var passport = require('../../config/passport')
 var User = require('../../model/user')
 var Cafe = require('../../model/cafe')
+
+router.use('/:id/profileimage', express.static(__dirname+'/profileImages'))
 
 var storage = multer.diskStorage({
   destination: function(req, file, callback) {
@@ -18,26 +19,6 @@ var storage = multer.diskStorage({
   }
 })
 var upload = multer({ storage: storage })
-
-router.put('/:id/profileimage', upload.single('image'), function(req, res, next) {
-  var userID = req.params.id
-  console.log(req.file);
-  if(req.file !== undefined) {
-    User.findById(userID, function(err, user) {
-      if(user) {
-        user.imageURL = req.file.filename
-        user.save(function(err) {
-          if(err) throw err
-          res.json({ result: 1, imageURL: user.imageURL })
-        })
-      } else {
-        res.json({ result: 0 })
-      }
-    })
-  } else {
-    res.json({ result: 0 })
-  }
-})
 
 // register
 router.post('/register', function(req, res, next) {
@@ -78,14 +59,15 @@ router.post('/login/kakao', function(req, res) {
   User.findOne({ email: req.body.email }, function(err, user) {
     if(err) throw err
     if(user) {
-      if(user.nickname !== req.body.nickname) {
+      if(user.nickname !== req.body.nickname && req.body.nickname !== "") {
         user.nickname = req.body.nickname
-      } else if(user.imageURL !== req.body.imageURL) {
+      } else if(user.imageURL !== req.body.imageURL && req.body.imageURL !== "") {
         user.imageURL = req.body.imageURL
       }
       user.save(function(err) {
         if(err) throw err
       })
+      console.log(user)
       res.json({ result: 1, user: user })
     } else {
       var user = new User()
@@ -98,6 +80,26 @@ router.post('/login/kakao', function(req, res) {
       })
     }
   })
+})
+
+// user profile image 변경
+router.put('/:id/profileimage', upload.single('image'), function(req, res, next) {
+  var userID = req.params.id
+  if(req.file !== undefined) {
+    User.findById(userID, function(err, user) {
+      if(user) {
+        user.imageURL = req.file.filename
+        user.save(function(err) {
+          if(err) throw err
+          res.json({ result: 1, imageURL: user.imageURL })
+        })
+      } else {
+        res.json({ result: 0 })
+      }
+    })
+  } else {
+    res.json({ result: 0 })
+  }
 })
 
 // logout
