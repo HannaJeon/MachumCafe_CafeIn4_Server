@@ -1,9 +1,28 @@
 var express = require('express')
 var router = express.Router()
 var mongoose = require('mongoose')
+var multer = require('multer')
+var path = require('path')
+var uuid = require('uuid')
 var passport = require('../../config/passport')
 var User = require('../../model/user')
 var Cafe = require('../../model/cafe')
+
+var storage = multer.diskStorage({
+  destination: function(req, file, callback) {
+    callback(null, __dirname + '/profileImages')
+  },
+  filename: function(req, file, callback) {
+    var userID = req.params.id
+    console.log(userID)
+    callback(null, userID + path.extname(file.originalname))
+  }
+})
+var upload = multer({ storage: storage })
+
+router.post('/:id/profileimage', upload.single('image'), function(req, res, next) {
+  res.json({ result: 1, imageName: req.file.filename})
+})
 
 // register
 router.post('/register', function(req, res, next) {
