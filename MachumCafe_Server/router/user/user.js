@@ -28,7 +28,7 @@ router.put('/:id/profileimage', upload.single('image'), function(req, res, next)
         user.imageURL = req.file.filename
         user.save(function(err) {
           if(err) throw err
-          res.json({ result: 1, user: user })
+          res.json({ result: 1, imageURL: user.imageURL })
         })
       } else {
         res.json({ result: 0 })
