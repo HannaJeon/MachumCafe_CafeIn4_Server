@@ -23,7 +23,6 @@ router.put('/:id/profileimage', upload.single('image'), function(req, res, next)
   var userID = req.params.id
   if(req.file !== undefined) {
     User.findById(userID, function(err, user) {
-      if(err) throw err
       if(user) {
         user.imageURL = req.file.filename
         user.save(function(err) {
