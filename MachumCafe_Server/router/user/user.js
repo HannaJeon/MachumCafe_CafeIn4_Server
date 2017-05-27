@@ -14,14 +14,29 @@ var storage = multer.diskStorage({
   },
   filename: function(req, file, callback) {
     var userID = req.params.id
-    console.log(userID)
     callback(null, userID + path.extname(file.originalname))
   }
 })
 var upload = multer({ storage: storage })
 
-router.post('/:id/profileimage', upload.single('image'), function(req, res, next) {
-  res.json({ result: 1, imageName: req.file.filename})
+router.put('/:id/profileimage', upload.single('image'), function(req, res, next) {
+  var userID = req.params.id
+  if(req.file !== undefined) {
+    User.findById(userID, function(err, user) {
+      if(err) throw err
+      if(user) {
+        user.imageURL = req.file.filename
+        user.save(function(err) {
+          if(err) throw err
+          res.json({ result: 1, user: user })
+        })
+      } else {
+        res.json({ result: 0 })
+      }
+    })
+  } else {
+    res.json({ result: 0 })
+  }
 })
 
 // register
