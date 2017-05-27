@@ -71,6 +71,7 @@ router.post('/login/kakao', function(req, res) {
       res.json({ result: 1, user: user })
     } else {
       var user = new User()
+      user.isKakao = true
       user.email = req.body.email
       user.nickname = req.body.nickname
       user.imageURL = req.body.imageURL
