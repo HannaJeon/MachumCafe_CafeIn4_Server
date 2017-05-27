@@ -5,6 +5,7 @@ var reviewSchema = new Schema({
   userId: String,
   date: String,
   nickname: String,
+  profileImageURL: String,
   reviewContent: String,
   rating: Number
 })

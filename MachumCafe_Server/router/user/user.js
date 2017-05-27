@@ -21,6 +21,7 @@ var upload = multer({ storage: storage })
 
 router.put('/:id/profileimage', upload.single('image'), function(req, res, next) {
   var userID = req.params.id
+  console.log(req.file);
   if(req.file !== undefined) {
     User.findById(userID, function(err, user) {
       if(user) {
