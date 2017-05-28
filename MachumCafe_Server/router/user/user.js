@@ -62,16 +62,16 @@ router.post('/login/kakao', function(req, res) {
       if(user.nickname !== req.body.nickname && req.body.nickname !== "") {
         user.nickname = req.body.nickname
       } else if(user.imageURL !== req.body.imageURL && req.body.imageURL !== "") {
+        user.isKakaoImage = false
         user.imageURL = req.body.imageURL
       }
       user.save(function(err) {
         if(err) throw err
       })
-      console.log(user)
       res.json({ result: 1, user: user })
     } else {
       var user = new User()
-      user.isKakao = true
+      user.isKakaoImage = true
       user.email = req.body.email
       user.nickname = req.body.nickname
       user.imageURL = req.body.imageURL
@@ -89,10 +89,11 @@ router.put('/:id/profileimage', upload.single('image'), function(req, res, next)
   if(req.file !== undefined) {
     User.findById(userID, function(err, user) {
       if(user) {
+        user.isKakaoImage = false
         user.imageURL = req.file.filename
         user.save(function(err) {
           if(err) throw err
-          res.json({ result: 1, imageURL: user.imageURL })
+          res.json({ result: 1, user: user })
         })
       } else {
         res.json({ result: 0 })

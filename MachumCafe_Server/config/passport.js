@@ -24,7 +24,7 @@ passport.use('register', new LocalStrategy( {
       return done(null, false)
     } else {
       var user = new User()
-      user.isKakao = false
+      user.isKakaoImage = false
       user.email = email
       user.password = user.generateHash(password)
       user.nickname = req.body.nickname

@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var reviewSchema = new Schema({
-  isKakao: Boolean,
+  isKakaoImage: Boolean,
   userId: String,
   date: String,
   nickname: String,
