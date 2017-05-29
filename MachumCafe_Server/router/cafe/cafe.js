@@ -16,7 +16,6 @@ router.post('/', function(req, res) {
       }
     }
   }).exec(function(err, cafe) {
-    console.log(cafe.length)
     res.json(cafe)
   })
 })
