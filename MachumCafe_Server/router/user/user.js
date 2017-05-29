@@ -61,8 +61,8 @@ router.post('/login/kakao', function(req, res) {
     if(user) {
       if(user.nickname !== req.body.nickname && req.body.nickname !== "") {
         user.nickname = req.body.nickname
-      } else if(user.imageURL !== req.body.imageURL && req.body.imageURL !== "") {
-        user.isKakaoImage = false
+      } else if(user.isKakaoImageuser && req.body.imageURL !== "") {
+        user.isKakaoImageuser = false
         user.imageURL = req.body.imageURL
       }
       user.save(function(err) {
