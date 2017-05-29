@@ -12,12 +12,8 @@ router.post('/', function(req, res) {
           type: 'Point',
           coordinates: [req.body.longitude, req.body.latitude]
         },
-        // $near: [req.body.longitude, req.body.latitude],
         $maxDistance: 1000
       }
-      // $geoWithin: {
-      //   $centerSphere: [[req.body.longitude, req.body.latitude], 1 / 6378.1]
-      // }
     }
   }).exec(function(err, cafe) {
     console.log(cafe.length)
@@ -37,20 +33,17 @@ router.get('/:id', function(req, res) {
 // 카페 리뷰 등록
 router.put('/:id/review', function(req, res) {
   var id = req.params.id
-  // if(!req.user) {
-  //   res.json({ result: 0, description: '세션정보 없음!' })
-  // } else {
-    Cafe.findById(id, function(err, cafe) {
-      cafe.totalRating += req.body.review.rating
-      cafe.rating = cafe.totalRating / (cafe.review.length+1)
-      req.body.review.date = new Date().toISOString().slice(0,10)
-      cafe.review.push(req.body.review)
-      cafe.save(function(err) {
-        if(err) res.json(err)
-        res.json({ result: 1, description: '리뷰 등록!', reviews: cafe.review })
-      })
+
+  Cafe.findById(id, function(err, cafe) {
+    cafe.totalRating += req.body.review.rating
+    cafe.rating = cafe.totalRating / (cafe.review.length+1)
+    req.body.review.date = new Date().toISOString().slice(0,10)
+    cafe.review.push(req.body.review)
+    cafe.save(function(err) {
+      if(err) res.json(err)
+      res.json({ result: 1, description: '리뷰 등록!', reviews: cafe.review })
     })
-  // }
+  })
 })
 
 // 카페 리뷰 목록 불러오기

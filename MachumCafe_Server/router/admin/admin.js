@@ -11,7 +11,7 @@ var googleMapsClient = require('@google/maps').createClient({
 
 router.use('/suggestion', suggestion)
 
-// 크롤링 강남구 카페 DB
+// 크롤링
 router.get('/cafe', function(req, res) {
   var count = 0
 
@@ -139,28 +139,28 @@ function categoryFunc(keyword, category) {
 }
 
 // 카페DB 중복검사
-router.get('/test', function(req, res) {
+router.get('/check', function(req, res) {
   var count = 0
   Cafe.find({}, function(err, cafes) {
     for(var i = 0; i < cafes.length; i++) {
       for(var j = i+1; j < cafes.length; j++) {
         if(cafes[i].address === cafes[j].address && cafes[i].name === cafes[j].name) {
-          // cafes[j].remove(function(err, result) {
-          //   count++
-          //   console.log(count)
-          //   // console.log(result)
-          //   // console.log("중복있음", i, j, cafes[i].address)
-          // })
+          cafes[j].remove(function(err, result) {
+            count++
+            console.log(count)
+            // console.log(result)
+            // console.log("중복있음", i, j, cafes[i].address)
+          })
           console.log("중복있음", i, j, cafes[i].address)
         }
       }
-      // console.log('out', i, j)
     }
   })
   res.json("중복검사")
 })
 
-router.get('/test1', function(req, res) {
+// 카페 기본 평점 추가
+router.get('/makerating', function(req, res) {
   Cafe.find(function(err, cafes) {
     cafes.forEach(function(cafe) {
       cafe.rating = 0.0
