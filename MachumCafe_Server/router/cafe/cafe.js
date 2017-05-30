@@ -47,7 +47,7 @@ router.put('/:id/review', function(req, res) {
       cafe.review.push(req.body.review)
       cafe.save(function(err) {
         if(err) res.json(err)
-        res.json({ result: 1, description: '리뷰 등록!', reviews: cafe.review })
+        res.json({ result: 1, description: '리뷰 등록!', reviews: cafe.review, rating: cafe.rating })
       })
     })
   // }
