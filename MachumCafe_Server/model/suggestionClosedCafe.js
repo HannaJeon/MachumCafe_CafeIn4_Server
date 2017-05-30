@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var review = require('./review').schema
 var Schema = mongoose.Schema
 
-var suggestionEditCafeSchema = new Schema({
+var suggestionClosedCafeSchema = new Schema({
   cafeID: String,
   name: String,
   address: String,
@@ -19,4 +19,4 @@ var suggestionEditCafeSchema = new Schema({
   review: [review]
 })
 
-module.exports = mongoose.model('suggestion_editCafelist', suggestionEditCafeSchema)
+module.exports = mongoose.model('suggestion_closedCafelist', suggestionClosedCafeSchema)

@@ -170,4 +170,24 @@ router.get('/makerating', function(req, res) {
   res.json("완료")
 })
 
+router.get('/makestring', function(req, res) {
+  Cafe.find(function(err, cafes) {
+    cafes.forEach(function(cafe) {
+      if(cafe.hours !== undefined && cafe.hours[cafe.hours.length-1] === "\n") {
+        cafe.hours = cafe.hours.slice(0, -1)
+      }
+      if(cafe.menu !== undefined && cafe.menu[cafe.menu.length-1] === "\n") {
+        cafe.menu = cafe.menu.slice(0, -1)
+      }
+      if(cafe.name !== undefined && cafe.name[cafe.name.length-1] === " ") {
+        cafe.name = cafe.name.slice(0, -1)
+      }
+      cafe.save(function(err) {
+        if(err) throw err
+      })
+    })
+    res.json("완료")
+  })
+})
+
 module.exports = router
