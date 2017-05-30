@@ -3,7 +3,7 @@ var router = express.Router()
 var mongoose = require('mongoose')
 var multer = require('multer')
 var path = require('path')
-var passport = require('../../config/passport')
+var passport = require('../../passport/passport')
 var User = require('../../model/user')
 var Cafe = require('../../model/cafe')
 
@@ -114,7 +114,7 @@ router.get('/logout', function(req, res) {
 // get My bookmark cafe
 router.get('/:id/bookmark', function(req, res) {
   var id = req.params.id
-  
+
   User.findById(id, function(err, user) {
     if(err) res.json(err)
 

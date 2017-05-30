@@ -5,9 +5,7 @@ var request = require('request')
 var cheerio = require('cheerio')
 var Cafe = require('../../model/cafe')
 var suggestion = require('./suggestion/suggestion')
-var googleMapsClient = require('@google/maps').createClient({
-  key: 'AIzaSyBNTjHJ-wYRN_p9x7HMJu-_sI2LG-kzVj4'
-})
+var googleMapsClient = require('../../config/key')
 
 router.use('/suggestion', suggestion)
 
