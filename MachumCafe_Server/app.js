@@ -7,7 +7,9 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var session = require('express-session')
 
-mongoose.connect('mongodb://localhost:27017/MachumCafe')
+mongoose.connect('mongodb://MachumCafe:machumcafe@localhost:27017/MachumCafe', {
+  useMongoClient: true
+})
 mongoose.Promise = global.Promise
 
 app.listen(3000, function() {
