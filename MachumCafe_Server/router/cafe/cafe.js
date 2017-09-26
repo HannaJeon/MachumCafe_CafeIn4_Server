@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var mongoose = require('mongoose')
 var Cafe = require('../../model/cafe')
+var Review = require('../../model/review')
 
 // 현위치 1km 내 카페 전체목록
 router.post('/', function(req, res) {
@@ -46,10 +47,20 @@ router.put('/:id/review', function(req, res) {
 })
 
 // 카페 리뷰 목록 불러오기
-router.get('/:id/review', function(req, res) {
+router.get('/:id/review/:page', function(req, res) {
   var id = req.params.id
+  var startIndex = parseInt(req.params.page)
+  var endIndex = startIndex === 0 ? 3 : startIndex+10
   Cafe.findById(id, function(err, cafe) {
-    res.json({ result: 1, description: '성공!', reviews: cafe.review })
+    var reviews = []
+    for(var i = startIndex; i < endIndex; i++) {
+      reviews.push(cafe.review[i])
+    }
+    if(endIndex >= cafe.review.length-1) {
+      res.json({ result: 2, description: '성공!', reviews: reviews })
+    } else {
+      res.json({ result: 1, description: '성공!', reviews: reviews })
+    }
   })
 })
 
