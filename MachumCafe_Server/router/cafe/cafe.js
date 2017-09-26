@@ -49,14 +49,24 @@ router.put('/:id/review', function(req, res) {
 // 카페 리뷰 목록 불러오기
 router.get('/:id/review/:page', function(req, res) {
   var id = req.params.id
-  var startIndex = parseInt(req.params.page)
-  var endIndex = startIndex === 0 ? 3 : startIndex+10
+
   Cafe.findById(id, function(err, cafe) {
+    var startIndex = cafe.review.length-1 - req.params.page
+    var endIndex = 0
+    if(startIndex === cafe.review.length-1) {
+      endIndex = cafe.review.length - 3
+    } else if(startIndex <= 10) {
+      endIndex = 0
+    } else {
+      endIndex = startIndex-10
+    }
     var reviews = []
-    for(var i = startIndex; i < endIndex; i++) {
+    for(var i = startIndex; i >= endIndex; i--) {
       reviews.push(cafe.review[i])
     }
-    if(endIndex >= cafe.review.length-1) {
+
+    if(endIndex <= 0) {
+      console.log(123123);
       res.json({ result: 2, description: '성공!', reviews: reviews })
     } else {
       res.json({ result: 1, description: '성공!', reviews: reviews })
